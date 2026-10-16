@@ -14,7 +14,7 @@ Usage:
     python eda_tennis.py --rebuild       # rebuild the database from the CSVs first
 
 Data: Jeff Sackmann / Tennis Abstract Match Charting Project, licensed
-CC BY-NC-SA 4.0 (see README.md).
+CC BY-NC-SA 4.0 (see tennis_MatchChartingProject/README.md).
 """
 
 import argparse
@@ -32,7 +32,7 @@ from matplotlib.figure import Figure
 
 import tennis_db
 
-DATA_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_DIR = os.path.dirname(os.path.abspath(__file__))
 TOURS = {"M": "Men", "W": "Women"}
 SURFACES = ["Hard", "Clay", "Grass"]
 
@@ -695,7 +695,7 @@ def analyze_overview(ov: pd.DataFrame, out_dir: str, show: bool) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--out", default=os.path.join(DATA_DIR, "eda_output"),
+    parser.add_argument("--out", default=os.path.join(REPO_DIR, "eda_output"),
                         help="directory for saved figures (default: ./eda_output)")
     parser.add_argument("--show", action="store_true", help="display figures interactively")
     parser.add_argument("--db", default=tennis_db.DEFAULT_DB_PATH,

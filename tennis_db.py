@@ -38,7 +38,7 @@ Usage:
     python tennis_db.py --db other.db    # build somewhere else
 
 Data: Jeff Sackmann / Tennis Abstract Match Charting Project, licensed
-CC BY-NC-SA 4.0 (see README.md).
+CC BY-NC-SA 4.0 (see tennis_MatchChartingProject/README.md).
 """
 
 import argparse
@@ -54,8 +54,10 @@ from typing import TypedDict
 
 import pandas as pd
 
-DATA_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_DB_PATH = os.path.join(DATA_DIR, "tennis.db")
+REPO_DIR = os.path.dirname(os.path.abspath(__file__))
+# The CSVs live in the tennis_MatchChartingProject git submodule.
+DATA_DIR = os.path.join(REPO_DIR, "tennis_MatchChartingProject")
+DEFAULT_DB_PATH = os.path.join(REPO_DIR, "tennis.db")
 VALID_SURFACES = {"Hard", "Clay", "Grass"}
 EDITION_GAP_DAYS = 60
 
@@ -674,6 +676,9 @@ def source_csvs():
 def build_database(db_path=DEFAULT_DB_PATH):
     """Create db_path from the CSVs, replacing any existing file."""
     start = time.time()
+    if not source_csvs():
+        raise SystemExit(f"No charting-*.csv files in {DATA_DIR}.\n"
+                         "Fetch the data submodule with: git submodule update --init")
     print(f"Building {db_path} from {len(source_csvs())} CSV files ...")
     tmp_path = db_path + ".tmp"
     if os.path.exists(tmp_path):
